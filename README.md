@@ -11,6 +11,11 @@ Create a file called `.env` with the following contents:
     GRAFANA_USERNAME=kotiscale
     GRAFANA_PASSWORD=<make up a secure password>
 
+If you want Cozify temperatures to work, authenticate to Cozify Cloud _outside_ the container:
+
+    pip3 install cozify
+    python3 -c 'from cozify import cloud; cloud.authenticate()'
+
 Start the services:
 
     git submodule update --init

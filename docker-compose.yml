@@ -69,6 +69,17 @@ services:
       TS_PROM_DB_NAME: prometheus
       TS_PROM_DB_PASSWORD: ${POSTGRES_PASSWORD}
 
+  # https://github.com/japsu/cozify-exporter
+  cozify-exporter:
+    build:
+      context: gitmodules/cozify-exporter
+      dockerfile: Dockerfile
+    init: true
+    ports:
+      - 5000:5000
+    volumes:
+      - $HOME/.config/python-cozify/python-cozify.cfg:/root/.config/python-cozify/python-cozify.cfg
+
 volumes:
   timescale-data: {}
   grafana-data: {}

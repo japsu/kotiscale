@@ -1,3 +1,6 @@
 [submodule "gitmodules/wait-for-it"]
 	path = gitmodules/wait-for-it
 	url = https://github.com/vishnubob/wait-for-it.git
+[submodule "gitmodules/cozify-exporter"]
+	path = gitmodules/cozify-exporter
+	url = https://github.com/japsu/cozify-exporter.git
