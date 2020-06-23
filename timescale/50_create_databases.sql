@@ -1,0 +1,2 @@
+CREATE DATABASE grafana ENCODING 'utf-8';
+CREATE DATABASE prometheus ENCODING 'utf-8';

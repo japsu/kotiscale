@@ -1,0 +1,74 @@
+version: '3.7'
+
+services:
+  # https://docs.timescale.com/latest/getting-started/installation/docker/installation-docker
+  timescale:
+    build:
+      context: .
+      dockerfile: timescale/Dockerfile
+    volumes:
+      - timescale-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_DATABASE: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  # https://prometheus.io/docs/prometheus/latest/installation/
+  prometheus:
+    image: quay.io/prometheus/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+
+  alertmanager:
+    image: quay.io/prometheus/alertmanager
+    ports:
+      - 9093:9093
+
+  # https://grafana.com/docs/grafana/latest/installation/docker/
+  grafana:
+    build:
+      context: .
+      dockerfile: grafana/Dockerfile
+    entrypoint: /usr/local/bin/wait-for-it.sh -t 60 timescale:5432 -- /run.sh
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_USERNAME}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD}
+      GF_DATABASE_URL: postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@timescale/grafana
+
+  loki:
+    image: grafana/loki:1.5.0
+    ports:
+      - 3100:3100
+    command: -config.file=/etc/loki/local-config.yaml
+
+  promtail:
+    image: grafana/promtail:1.5.0
+    # volumes:
+    #   - /var/log:/var/log
+    command: -config.file=/etc/promtail/docker-config.yaml
+
+  # https://github.com/timescale/timescale-prometheus
+  timescale-prometheus:
+    build:
+      context: .
+      dockerfile: timescale-prometheus/Dockerfile
+    entrypoint: /usr/local/bin/wait-for-it.sh -t 60 timescale:5432 -- /usr/local/bin/timescale-prometheus
+    ports:
+      - 9201:9201
+    environment:
+      TS_PROM_DB_HOST: timescale
+      TS_PROM_DB_USER: ${POSTGRES_USERNAME}
+      TS_PROM_DB_NAME: prometheus
+      TS_PROM_DB_PASSWORD: ${POSTGRES_PASSWORD}
+
+volumes:
+  timescale-data: {}
+  grafana-data: {}
