@@ -1,4 +1,4 @@
-# Kotiscale
+# Kotiscale HomeOps Platform
 
 Prometheus + Grafana + TimescaleDB + Cozify = ?
 
@@ -27,3 +27,9 @@ Access the services:
 * **Alertmanager**: [localhost:9093](http://localhost:9093)
 * **Grafana**: [localhost:3000](http://localhost:3000)
   * use `GRAFANA_USERNAME/GRAFANA_PASSWORD` set above
+
+## TODO
+
+* [ ] Provision data sources and dashboards at cold startup (currently requires clicking)
+* [ ] Ship logs to Loki (Loki and Promtail set up but currently not receiving logs)
+* [ ] Toss Cozify at the marine birdlife and set up something more reasonable (it sucks :)
