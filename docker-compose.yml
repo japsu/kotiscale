@@ -87,9 +87,8 @@ services:
     init: true
     ports:
       - 9521:9521
-    command: --debug
-    # volumes:
-    #   - /dev/hci0:/dev/hci0
+    privileged: true
+    network_mode: host
 
 volumes:
   timescale-data: {}
