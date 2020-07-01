@@ -4,3 +4,6 @@
 [submodule "gitmodules/cozify-exporter"]
 	path = gitmodules/cozify-exporter
 	url = https://github.com/japsu/cozify-exporter.git
+[submodule "gitmodules/ruuvi-prometheus"]
+	path = gitmodules/ruuvi-prometheus
+	url = https://github.com/joneskoo/ruuvi-prometheus.git

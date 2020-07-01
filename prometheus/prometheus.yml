@@ -21,13 +21,17 @@ scrape_configs:
     static_configs:
       - targets: ['alertmanager:9093']
 
-  - job_name: 'grafana'
+  - job_name: grafana
     static_configs:
       - targets: ['grafana:3000']
 
-  - job_name: 'cozify'
+  - job_name: cozify
     static_configs:
       - targets: ['cozify-exporter:5000']
+
+  - job_name: ruuvi
+    static_configs:
+      - targets: ['ruuvi-prometheus:9521']
 
 remote_write:
   - url: "http://timescale-prometheus:9201/write"

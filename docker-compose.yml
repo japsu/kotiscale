@@ -80,6 +80,17 @@ services:
     volumes:
       - $HOME/.config/python-cozify/python-cozify.cfg:/root/.config/python-cozify/python-cozify.cfg
 
+  ruuvi-prometheus:
+    build:
+      context: .
+      dockerfile: ruuvi-prometheus/Dockerfile
+    init: true
+    ports:
+      - 9521:9521
+    command: --debug
+    # volumes:
+    #   - /dev/hci0:/dev/hci0
+
 volumes:
   timescale-data: {}
   grafana-data: {}
