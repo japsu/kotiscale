@@ -32,6 +32,21 @@ scrape_configs:
   - job_name: ruuvi
     static_configs:
       - targets: ['172.22.0.1:9521']
+    metric_relabel_configs:
+      - source_labels: [device]
+        regex: '^e1:70:26:63:b6:a2$'
+        replacement: 'Terassi'
+        target_label: name
+
+      - source_labels: [device]
+        regex: '^cb:e9:eb:0c:2f:2d$'
+        replacement: 'MH yöpöytä'
+        target_label: name
+
+      - source_labels: [device]
+        regex: '^fe:93:1c:0a:64:f0$'
+        replacement: 'OH työpiste'
+        target_label: name
 
 remote_write:
   - url: "http://timescale-prometheus:9201/write"
