@@ -48,6 +48,11 @@ scrape_configs:
         replacement: 'OH työpiste'
         target_label: name
 
+      - source_labels: [device]
+        regex: '^fa:6a:3b:33:47:2c$'
+        replacement: 'Etuovi'
+        target_label: name
+
 remote_write:
   - url: "http://timescale-prometheus:9201/write"
 remote_read:
